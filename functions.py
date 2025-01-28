@@ -4,6 +4,7 @@ import os
 
 def download(url, file_loc):
     print("Downloading Youtube Video" + "url")
+    file_loc = file_loc + ".mp4"
 
     ydl_opts = {
         'outtmpl': file_loc,
@@ -27,4 +28,5 @@ def chop(input_file):
         count = count + 1
         if (count > (video_length - 1)):
             cap.release()
-        break
+
+
