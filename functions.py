@@ -26,6 +26,7 @@ def chop(input_file):
         ret, frame = cap.read()
         cv2.imwrite(output_directory + "/%d.png" % (count + 1), frame)
         count = count + 1
+        print(count)
         if (count > (video_length - 1)):
             cap.release()
 
