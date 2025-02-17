@@ -1,4 +1,7 @@
 import requests
+import pandas as pd
+import numpy as np
+import os
 
 class Video:
     def __init__(self, video_id, title, channel, description, url):
@@ -29,7 +32,9 @@ def get_video_info(search_query, maxResults):
     videos = []
 
     for item in data['items']:
-        video_id = item['id']['videoId']
+
+        video_id = item['id']
+
         title = item['snippet']['title']
         channel = item['snippet']['channelTitle']
         description = item['snippet']['description']
@@ -38,3 +43,24 @@ def get_video_info(search_query, maxResults):
 
     return videos
 
+
+def save_to_csv(search_query, maxResults):
+    videos = get_video_info(search_query, maxResults)
+
+    columns = ["search_query", "max results", "title", "channel", "description", "url"]
+    df = pd.DataFrame(columns=columns)
+
+    for video in videos:
+        df.loc[len(df)] = [search_query, maxResults, video.title, video.channel, video.description, video.url]
+
+    if not os.path.exists("data.csv"):
+        df.to_csv("data.csv", index=False)
+
+    else:
+        df = pd.read_csv("data.csv")
+        for video in videos:
+            df.loc[len(df)] = [search_query, maxResults, video.title, video.channel, video.description, video.url]
+            df.to_csv("data.csv", index=False)
+
+
+save_to_csv("pokemon platinum", "10")
