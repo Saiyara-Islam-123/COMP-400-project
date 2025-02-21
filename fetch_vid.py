@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import numpy as np
+
 import os
 
 class Video:
@@ -63,4 +63,23 @@ def save_to_csv(search_query, maxResults):
             df.to_csv("data.csv", index=False)
 
 
-save_to_csv("pokemon platinum", "10")
+def search_all(keywords, max_results = 50):
+    for keyword in keywords:
+        save_to_csv(keyword, max_results)
+
+def generate_queries():
+    queries  = []
+    patterns1 = ["kid", "kids", "children", "child", "baby", "babies"]
+    patterns2 = ["cartoon", "animation", "song", "content", "channel", "fun"]
+
+
+    for pattern in patterns1:
+        for i in range(len(patterns2)):
+            queries.append( pattern + " " + patterns2[i])
+            for j in range(len(patterns2)):
+                if j != i:
+                    queries.append(pattern + " " + patterns2[i] + " " + patterns2[j])
+
+    return queries
+
+search_all(generate_queries())
