@@ -40,7 +40,7 @@ def process_all():
     urls = []
     xors = []
 
-    for i in range(90, 120):
+    for i in range(130, 200):
 
         url = df["url"][i]
         urls.append(url)
@@ -62,8 +62,8 @@ def process_all():
     df_xor["url"] = urls
     df_xor["xor"] = xors
 
-    df_xor.to_csv('xors3.csv', index=False, header=True)
-    print("Saved to xors.csv")
+    df_xor.to_csv('xors7.csv', index=False, header=True)
+    print("Saved to xors7.csv")
     #return urls, xors
 
 
