@@ -48,6 +48,14 @@ def chop(input_file):
         if (count > (video_length - 1)):
             cap.release()
 
+def get_dimensions(url):
+    response = requests.get(url)
+    html = response.text
+    match = re.search(r'"width":(\d+),"height":(\d+)', html)
+    if match:
+        width, height = match.groups()
+        return int(width), int(height)
+
 
 def filter_by_duration(video_id):
     duration_string = check_duration(video_id)
@@ -71,6 +79,7 @@ def filter_by_duration(video_id):
             return False, -1
         else:
             return True, mins
+
 
 
 #download("https://www.youtube.com/watch?v=4ARDKad9KwU&ab_channel=Chomsky%27sPhilosophy", "vid")
