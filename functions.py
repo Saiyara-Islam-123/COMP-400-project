@@ -5,6 +5,7 @@ import requests
 import re
 
 from yt_dlp import YoutubeDL
+import yt_dlp
 
 with open('API Key.txt', 'r') as file:
     for line in file:
@@ -30,7 +31,10 @@ def download(url, file_loc):
     }
 
     with YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+        try:
+            ydl.download([url])
+        except yt_dlp.utils.DownloadError as e:
+            print("Download failed")
 
 def chop(input_file):
     output_directory = input_file.removesuffix(".mp4")

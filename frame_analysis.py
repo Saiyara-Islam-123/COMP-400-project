@@ -40,30 +40,31 @@ def process_all():
     urls = []
     xors = []
 
-    for i in range(130, 200):
+    for i in range(30, 60):
 
         url = df["url"][i]
-        urls.append(url)
-
         download(url, "vid")
-        chop("vid.mp4")
 
-        list_xor = xor()
+        if os.path.exists("vid.mp4"):
+            chop("vid.mp4")
 
-        shutil.rmtree("vid")
-        os.remove("vid.mp4")
-        print("video deleted with folder and frames" + str(i))
+            list_xor = xor()
 
-        array_xor = np.array(list_xor)
-        xors.append(array_xor)
-        print(array_xor.shape)
+            shutil.rmtree("vid")
+            os.remove("vid.mp4")
+            print("video deleted with folder and frames" + str(i))
+
+            array_xor = np.array(list_xor)
+            xors.append(array_xor)
+            urls.append(url)
+            print(array_xor.shape)
 
     df_xor = pd.DataFrame()
     df_xor["url"] = urls
     df_xor["xor"] = xors
 
-    df_xor.to_csv('xors7.csv', index=False, header=True)
-    print("Saved to xors7.csv")
+    df_xor.to_pickle('xors30to60.pkl')
+    print("Saved to xors30to60.pkl")
     #return urls, xors
 
 
