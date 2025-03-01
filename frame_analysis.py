@@ -8,6 +8,8 @@ import os
 
 df = pd.read_csv("filtered_data.csv")
 
+
+
 def xor():
     list_of_xor = []
     for i in range(1, len(os.listdir("vid"))):
@@ -17,30 +19,22 @@ def xor():
         frame_b_arr = np.array(frame_b)
         print(i, i+1)
 
-        list_of_xor.append(np.bitwise_xor(frame_a_arr, frame_b_arr))
+        list_of_xor.append(np.logical_xor(frame_a_arr, frame_b_arr))
 
     return np.array(list_of_xor)
 
-def get_max_dim():
-    max_dims = (0, 0)
-    for i in range(len(df["url"])):
-        url = df["url"][i]
-        dims = get_dimensions(url)
-        print(dims, i)
+def get_proportion_one(xors):
+    sums = xors.sum()
 
-        if dims[0] > max_dims[0]:
-            max_dims = dims
-        if dims[1] > max_dims[1]:
-            max_dims = dims
-    return max_dims
+    return sums / xors.size
+
 
 def process_all():
 
-
     urls = []
-    xors = []
+    zero_prop = []
 
-    for i in range(30, 60):
+    for i in range(100, 130):
 
         url = df["url"][i]
         download(url, "vid")
@@ -55,20 +49,27 @@ def process_all():
             print("video deleted with folder and frames" + str(i))
 
             array_xor = np.array(list_xor)
-            xors.append(array_xor)
+            zero_prop.append(get_proportion_one(array_xor))
+
+
             urls.append(url)
             print(array_xor.shape)
 
+
     df_xor = pd.DataFrame()
     df_xor["url"] = urls
-    df_xor["xor"] = xors
+    df_xor["ones"] = zero_prop
 
-    df_xor.to_pickle('xors30to60.pkl')
-    print("Saved to xors30to60.pkl")
+
+    df_xor.to_csv('xors100to130.csv')
+    print("Saved to xors.csv")
     #return urls, xors
 
 
-#print(get_max_dim())
-#(640, 360)
-
 (process_all())
+
+
+
+
+
+
