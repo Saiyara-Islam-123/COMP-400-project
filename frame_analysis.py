@@ -12,12 +12,12 @@ df = pd.read_csv("filtered_data.csv")
 
 def xor():
     list_of_xor = []
-    for i in range(1, len(os.listdir("vid"))):
+    for i in range(1, len(os.listdir("vid"))-9):
         frame_a = cv2.imread("vid/"+str(i)+".png")
         frame_a_arr = np.array(frame_a)
-        frame_b = cv2.imread("vid/"+str(i+1)+".png")
+        frame_b = cv2.imread("vid/"+str(i+10)+".png")
         frame_b_arr = np.array(frame_b)
-        print(i, i+1)
+        print(i, i+10)
 
         list_of_xor.append(np.logical_xor(frame_a_arr, frame_b_arr))
 
@@ -34,7 +34,7 @@ def process_all():
     urls = []
     zero_prop = []
 
-    for i in range(100, 130):
+    for i in range(0, 130):
 
         url = df["url"][i]
         download(url, "vid")
@@ -61,7 +61,7 @@ def process_all():
     df_xor["ones"] = zero_prop
 
 
-    df_xor.to_csv('xors100to130.csv')
+    df_xor.to_csv('xors_10_frames_to130.csv')
     print("Saved to xors.csv")
     #return urls, xors
 
