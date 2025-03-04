@@ -32,12 +32,15 @@ def get_proportion_one(xors):
 def process_all():
 
     urls = []
-    zero_prop = []
+    one_prop = []
+    durations = []
 
-    for i in range(0, 130):
+    for i in range(130, 175):
 
         url = df["url"][i]
+        duration = df["min"][i]
         download(url, "vid")
+
 
         if os.path.exists("vid.mp4"):
             chop("vid.mp4")
@@ -49,19 +52,21 @@ def process_all():
             print("video deleted with folder and frames" + str(i))
 
             array_xor = np.array(list_xor)
-            zero_prop.append(get_proportion_one(array_xor))
+            one_prop.append(get_proportion_one(array_xor))
 
 
             urls.append(url)
+            durations.append(duration)
             print(array_xor.shape)
 
 
     df_xor = pd.DataFrame()
     df_xor["url"] = urls
-    df_xor["ones"] = zero_prop
+    df_xor["ones"] = one_prop
+    df_xor["duration"] = durations
 
 
-    df_xor.to_csv('xors_10_frames_to130.csv')
+    df_xor.to_csv('xors_10_frames_130to175.csv')
     print("Saved to xors.csv")
     #return urls, xors
 

@@ -1,15 +1,37 @@
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
+import numpy as np
 
-df1 = pd.read_csv("xors0to10.csv")
-df2 = pd.read_csv("xors10to40.csv")
-df3 = pd.read_csv("xors40to100.csv")
-df4 = pd.read_csv("xors100to130.csv")
 
-df_ones = pd.concat([df1, df2, df3, df4])
-df_fours = pd.read_csv("xors_4_frames_to130.csv")
-df_tens = pd.read_csv("xors_10_frames_to130.csv")
+df_1 = pd.read_csv("xors_10_frames_to130.csv")
+df_2 = pd.read_csv("xors_10_frames_130to175.csv")
+df = pd.concat([df_1, df_2])
 
-df_duration = pd.read_csv("filtered_data.csv") #I have a trick
+zero_min = []
+one_min = []
+two_min = []
 
-#I wanna match videos with their duration coz I hadn't done it :<
+for i in range(len(df["duration"])):
+    if df["duration"].iloc[i] == 0:
+        zero_min.append(float(df["ones"].iloc[i]))
+    elif df["duration"].iloc[i] == 1:
+        one_min.append(float(df["ones"].iloc[i]))
+    else:
+        two_min.append(float(df["ones"].iloc[i]))
+
+
+zero_min_np = np.array(zero_min)
+one_min_np = np.array(one_min)
+two_min_np = np.array(two_min)
+
+categories = ["0 min", "1 min", "2 mins"]
+means = [np.mean(zero_min_np), np.mean(one_min_np), np.mean(two_min_np)]
+sds = [np.std(zero_min_np), np.std(one_min_np), np.std(two_min_np)]
+
+plt.errorbar(categories, means, sds, linestyle='None', marker='o')
+plt.xlabel('Minutes')
+plt.ylabel('Mean proportion of 1s in XORs')
+plt.title("Proportion of 1s in XORs across video duration")
+plt.savefig('Graph for first 175 videos.png')
+plt.show()
+
