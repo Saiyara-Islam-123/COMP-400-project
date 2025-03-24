@@ -35,7 +35,7 @@ def process_all():
     one_prop = []
     durations = []
 
-    for i in range(130, 175):
+    for i in range(175, 200):
 
         url = df["url"][i]
         duration = df["min"][i]
@@ -66,7 +66,7 @@ def process_all():
     df_xor["duration"] = durations
 
 
-    df_xor.to_csv('xors_10_frames_130to175.csv')
+    df_xor.to_csv('xors_10_frames_175to200.csv')
     print("Saved to xors.csv")
     #return urls, xors
 

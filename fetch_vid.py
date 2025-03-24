@@ -38,8 +38,8 @@ def get_video_info(search_query, maxResults):
         title = item['snippet']['title']
         channel = item['snippet']['channelTitle']
         description = item['snippet']['description']
-        url = f"https://www.youtube.com/watch?v={video_id}"
-        videos.append(Video(video_id, title, channel, description, url))
+
+        videos.append(Video(video_id, title, channel, description, video_id))
 
     return videos
 
