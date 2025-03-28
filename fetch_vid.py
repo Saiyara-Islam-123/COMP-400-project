@@ -53,24 +53,25 @@ def save_to_csv(search_query, maxResults):
     for video in videos:
         df.loc[len(df)] = [search_query, maxResults, video.title, video.channel, video.description, video.url]
 
-    if not os.path.exists("data.csv"):
-        df.to_csv("data.csv", index=False)
+    if not os.path.exists("data_with_brand.csv"):
+        df.to_csv("data_with_brand.csv", index=False)
 
     else:
-        df = pd.read_csv("data.csv")
+        df = pd.read_csv("data_with_brand.csv")
         for video in videos:
             df.loc[len(df)] = [search_query, maxResults, video.title, video.channel, video.description, video.url]
-            df.to_csv("data.csv", index=False)
+            df.to_csv("data_with_brand.csv", index=False)
 
 
 def search_all(keywords, max_results = 50):
     for keyword in keywords:
         save_to_csv(keyword, max_results)
 
+
 def generate_queries():
     queries  = []
-    patterns1 = ["kid", "kids", "children", "child", "baby", "babies"]
-    patterns2 = ["cartoon", "animation", "song", "content", "channel", "fun"]
+    patterns1 = ["cocomelon", "baby shark", "amazing digital circus", "spiderman", "elsa", 'poppy playtime', "sprunki", 'peppa pig', "minecraft", "roblox", "among us"]
+    patterns2 = ["cartoon", "animation", "song", "content", "channel", "fun", "rhyme", "nursery rhyme"]
 
 
     for pattern in patterns1:
@@ -79,6 +80,8 @@ def generate_queries():
             for j in range(len(patterns2)):
                 if j != i:
                     queries.append(pattern + " " + patterns2[i] + " " + patterns2[j])
+
+
 
     return queries
 

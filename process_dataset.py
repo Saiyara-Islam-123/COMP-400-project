@@ -28,10 +28,8 @@ def check_livestream(url):
             return False
 
 #formating urls
-df_data_trial1 = pd.read_csv("data_trial1.csv")
-df_data = pd.read_csv("data.csv")
 
-merged_df = pd.concat([df_data_trial1, df_data], ignore_index=True)
+merged_df = pd.read_csv("data2.csv")
 merged_df["corrected_url"] = merged_df['url'].apply(format_url)
 merged_df["video id"] = merged_df['url'].apply(vid_id)
 
@@ -73,4 +71,4 @@ print(sorted_dict)
 
 df_filtered = pd.DataFrame(list(sorted_dict.items()), columns=['url', 'min'])
 
-df_filtered.to_csv('filtered_data.csv', index=False)
+df_filtered.to_csv('filtered_data2.csv', index=False)
