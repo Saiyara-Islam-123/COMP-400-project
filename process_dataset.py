@@ -29,13 +29,13 @@ def check_livestream(url):
 
 #formating urls
 
-merged_df = pd.read_csv("data2.csv")
+merged_df = pd.read_csv("data_with_brand.csv")
 merged_df["corrected_url"] = merged_df['url'].apply(format_url)
 merged_df["video id"] = merged_df['url'].apply(vid_id)
 
 
 filtered_urls = {}
-for i in range(len(merged_df["url"])):
+for i in range(4046, len(merged_df)):
 
 
     if "videoId" in merged_df["url"].iloc[i] and merged_df["corrected_url"].iloc[i] not in filtered_urls: #getting rid of repeats
@@ -71,4 +71,4 @@ print(sorted_dict)
 
 df_filtered = pd.DataFrame(list(sorted_dict.items()), columns=['url', 'min'])
 
-df_filtered.to_csv('filtered_data2.csv', index=False)
+df_filtered.to_csv('filtered_data_with_brand2.csv', index=False)

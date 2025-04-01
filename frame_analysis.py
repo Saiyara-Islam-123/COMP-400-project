@@ -4,10 +4,42 @@ import shutil
 import cv2
 import numpy as np
 import os
+import random
+import colorsys
 
 
 df = pd.read_csv("filtered_data.csv")
 
+
+def sample_colour():
+    random.seed(50)
+    sampled = []
+
+    sampled_indices = random.sample(range(60, len(os.listdir("vid")) - 60), 50)
+
+    for i in sampled_indices:
+        frame_a = cv2.imread("vid/" + str(i) + ".png")
+        frame_a_arr = np.array(frame_a)
+        sampled.append(frame_a_arr)
+
+    saturations_all = []
+    for k in range(len(sampled)):
+        arr =  sampled[k]
+        saturations_arr = []
+        for i in range(arr.shape[0]):
+            for j in range (arr.shape[1]):
+                b = arr[i, j,0]/255
+                g = arr[i, j,1]/255
+                r = arr[i, j,2]/255
+
+                h, s, l = colorsys.rgb_to_hls(r, g, b)
+
+                s = s * 100
+                saturations_arr.append(s)
+        print(k)
+        saturations_all.append(np.mean(saturations_arr))
+
+    return np.mean(saturations_all)
 
 
 def xor():
@@ -29,13 +61,13 @@ def get_proportion_one(xors):
     return sums / xors.size
 
 
-def process_all():
+def process_all(start, end):
 
     urls = []
     one_prop = []
     durations = []
 
-    for i in range(177, 179):
+    for i in range(start, end):
 
         url = df["url"][i]
         duration = df["min"][i]
@@ -66,15 +98,9 @@ def process_all():
     df_xor["duration"] = durations
 
 
-    df_xor.to_csv('xors_10_frames_177to179.csv')
+    df_xor.to_csv('xors_10_frames_' + str(start) + "to" + str(end) + '.csv')
     print("Saved to xors.csv")
     #return urls, xors
 
 
-(process_all())
-
-
-
-
-
-
+#process_all(0, 1)
