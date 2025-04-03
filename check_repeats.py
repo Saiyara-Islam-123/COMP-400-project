@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("filtered_data.csv")
+df = pd.read_csv("./merged_dataset/generic_search.csv")
 
 urls = {}
 for i in range(len(df["url"])):
@@ -20,24 +20,18 @@ def uniques(csv_file):
         if url not in urls:
             new_ones.append(url)
             durations.append(duration)
-
+            print(url, duration)
     return new_ones, durations
 
 
-u1, d1 = (uniques("filtered_data2.csv"))
+u1, d1 = (uniques("filtered_data_without_brand.csv"))
 
-u2, d2 = (uniques("filtered_data3.csv"))
-
-
-
-merged_urls = u1 + u2
-merged_durations = d1 + d2
 
 new_df = pd.DataFrame()
 
-new_df["url"] = merged_urls
-new_df["min"] = merged_durations
+new_df["url"] = u1
+new_df["min"] = d1
 
 new_df.sort_values(by=['min'], ascending=True, inplace=True)
 
-new_df.to_csv("filtered_data_more.csv")
+new_df.to_csv("filtered_data_without_brand_uniques.csv")

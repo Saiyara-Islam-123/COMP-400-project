@@ -7,4 +7,4 @@ def merge_csv(file1, file2, new_name):
     df = pd.concat([df1, df2], ignore_index=True)
     df.to_csv(new_name, index=False)
 
-merge_csv("filtered_data_with_brand1.csv", "filtered_data_with_brand2.csv", "filtered_data_with_brand_merged.csv")
+merge_csv("xors_10_frames_without_brand0to4.csv", "./merged_dataset/generic_search.csv", "generic_search_updated.csv")

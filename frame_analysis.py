@@ -8,7 +8,7 @@ import random
 import colorsys
 
 
-df = pd.read_csv("filtered_data_with_brand_merged.csv")
+df = pd.read_csv("filtered_data_without_brand_uniques.csv")
 
 
 def sample_colour():
@@ -98,9 +98,9 @@ def process_all(start, end):
     df_xor["duration"] = durations
 
 
-    df_xor.to_csv('xors_10_frames_brand' + str(start) + "to" + str(end) + '.csv')
+    df_xor.to_csv('xors_10_frames_without_brand' + str(start) + "to" + str(end) + '.csv')
     print("Saved to xors.csv")
     #return urls, xors
 
 
-process_all(400, len(df["url"]))
+process_all(0, len(df["url"]))

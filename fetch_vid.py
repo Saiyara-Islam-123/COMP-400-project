@@ -53,8 +53,8 @@ def save_to_csv(search_query, maxResults):
     for video in videos:
         df.loc[len(df)] = [search_query, maxResults, video.title, video.channel, video.description, video.url]
 
-    if not os.path.exists("data_with_brand.csv.csv"):
-        df.to_csv("data3.csv", index=False)
+    if not os.path.exists("data_without.csv"):
+        df.to_csv("data_without.csv", index=False)
 
     else:
         df = pd.read_csv("data3.csv")
@@ -70,8 +70,7 @@ def search_all(keywords, max_results = 50):
 
 def generate_queries():
     queries  = []
-    patterns1 = ["cocomelon", "baby shark", "amazing digital circus", "spiderman", "elsa", 'poppy playtime', "sprunki",
-                 'peppa pig', "minecraft", "roblox", "among us"]
+    patterns1 = ["kid", "kids", "children", "child", "baby", "babies"]
     patterns2 = ["cartoon", "animation", "song", "content", "channel", "fun", "rhyme", "nursery rhyme"]
 
 
