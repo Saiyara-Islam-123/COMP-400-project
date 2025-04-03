@@ -8,14 +8,14 @@ import random
 import colorsys
 
 
-df = pd.read_csv("filtered_data_without_brand_uniques.csv")
+df = pd.read_csv("./merged_dataset/brand_search.csv")
 
 
 def sample_colour():
     random.seed(50)
     sampled = []
 
-    sampled_indices = random.sample(range(60, len(os.listdir("vid")) - 60), 100)
+    sampled_indices = random.sample(range(30, len(os.listdir("vid")) - 30), 20)
 
     for i in sampled_indices:
         frame_a = cv2.imread("vid/" + str(i) + ".png")
@@ -64,42 +64,42 @@ def get_proportion_one(xors):
 def process_all(start, end):
 
     urls = []
-    one_prop = []
+    sat_props = []
     durations = []
 
     for i in range(start, end):
 
         url = df["url"][i]
-        duration = df["min"][i]
+        duration = df["duration"][i]
         download(url, "vid")
 
 
         if os.path.exists("vid.mp4"):
             chop("vid.mp4")
 
-            list_xor = xor()
+            sat_prop = sample_colour()
 
             shutil.rmtree("vid")
             os.remove("vid.mp4")
             print("video deleted with folder and frames" + str(i))
 
-            array_xor = np.array(list_xor)
-            one_prop.append(get_proportion_one(array_xor))
+
+            sat_props.append(get_proportion_one(sat_prop))
 
 
             urls.append(url)
             durations.append(duration)
-            print(array_xor.shape)
+            print(sat_prop)
 
 
     df_xor = pd.DataFrame()
     df_xor["url"] = urls
-    df_xor["ones"] = one_prop
+    df_xor["ones"] = sat_props
     df_xor["duration"] = durations
 
 
-    df_xor.to_csv('xors_10_frames_without_brand' + str(start) + "to" + str(end) + '.csv')
-    print("Saved to xors.csv")
+    df_xor.to_csv('color_10_frames_without_brand' + str(start) + "to" + str(end) + '.csv')
+    print("Saved to color.csv")
     #return urls, xors
 
 
