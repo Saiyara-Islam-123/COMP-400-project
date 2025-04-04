@@ -8,7 +8,7 @@ import random
 import colorsys
 
 
-df = pd.read_csv("./merged_dataset/brand_search.csv")
+df = pd.read_csv("not_final/missed_these_brand.csv")
 
 
 def sample_colour():
@@ -70,7 +70,7 @@ def process_all(start, end):
     for i in range(start, end):
 
         url = df["url"][i]
-        duration = df["duration"][i]
+        duration = df["min"][i]
         download(url, "vid")
 
 
@@ -98,7 +98,7 @@ def process_all(start, end):
     df_xor["duration"] = durations
 
 
-    df_xor.to_csv('color_10_frames_without_brand' + str(start) + "to" + str(end) + '.csv')
+    df_xor.to_csv('color_10_frames_with_brand' + str(start) + "to" + str(end) + '.csv')
     print("Saved to color.csv")
     #return urls, xors
 

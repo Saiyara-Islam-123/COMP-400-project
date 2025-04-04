@@ -14,8 +14,8 @@ def merge(pattern):
     return pd.concat(dfs)
 
 
-df_merged = merge(r"xors_10_frames_brand[0-9]+")
-df_merged.to_csv("./merged_dataset/brand_search.csv", index=False)
+df_merged = merge(r"color_10_frames_with_brand[0-9]+")
+df_merged.to_csv("./merged_dataset/color_10_frames_with_brand0to414.csv", index=False)
 
 '''
 df1 = pd.read_csv("xors_10_frames_more_0to30.csv")
