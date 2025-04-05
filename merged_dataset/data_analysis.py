@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.linear_model import LinearRegression
+import seaborn as sns
 
 def plot (file, title):
 
@@ -67,4 +69,22 @@ def plot_cat(file, title):
 #plot("color_10_frames_without_brand0to258.csv", "Mean sat score without brand keywords")
 
 
-plot_cat("brand_search.csv", "with brand keywords")
+#plot_cat("brand_search.csv", "with brand keywords")
+
+def linear_regression(x, y):
+    reg = LinearRegression()
+    reg.fit(x, y)
+    return reg.score(x, y)
+
+def get_r_sq(file, func):
+    df = pd.read_csv(file)
+    predictor = df["duration"].to_numpy()
+    predictor_reshaped = predictor.reshape(predictor.shape[0], -1)
+    predicted = df["ones"]
+    return func(predictor_reshaped, predicted)
+
+print(get_r_sq("brand_search.csv", func=linear_regression)) #xor with linear regression
+print(get_r_sq("generic_search_updated.csv", func=linear_regression)) #xor with linear regression
+
+print(get_r_sq("color_10_frames_with_brand_all.csv", func=linear_regression)) #sat score with linear regression
+print(get_r_sq("color_10_frames_without_brand0to258.csv", func=linear_regression)) #sat score with linear regression

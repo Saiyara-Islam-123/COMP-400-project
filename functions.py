@@ -86,5 +86,5 @@ def filter_by_duration(video_id):
 
 
 
-#download("https://www.youtube.com/watch?v=4ARDKad9KwU&ab_channel=Chomsky%27sPhilosophy", "vid")
+#download("https://www.youtube.com/watch?v=1NG445yqiuc", "C:\\Users\\Admin\\Desktop\\Soundtrack\\Elite Four Kalos remix.mp4")
 #chop("vid.mp4")
